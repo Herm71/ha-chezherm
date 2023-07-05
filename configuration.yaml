@@ -13,3 +13,17 @@ tts:
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
+
+homeassistant:
+  name: Chez Herm
+  latitude: 36.972044
+  longitude: -122.028718
+  elevation: 36
+  unit_system: imperial
+  time_zone: America/Los_Angeles
+  external_url: "https://chezherm.duckdns.org:8123"
+  internal_url: "https://homeassistant.local:8123"
+  currency: USD
+  customize: !include customize.yaml
+  allowlist_external_dirs:
+    - /config
