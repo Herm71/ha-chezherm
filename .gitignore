@@ -27,3 +27,5 @@ known_devices.yaml
 # Ignore database & log
 home-assistant_v2.db
 home-assistant.log
+
+test.txt
