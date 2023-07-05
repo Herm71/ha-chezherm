@@ -1,0 +1,211 @@
+movie_time:
+  sequence:
+  - service: hue.hue_activate_scene
+    data:
+      group_name: Entertainment center
+      scene_name: Chill
+  mode: single
+  alias: Entertainment Center-Chill
+entertainment_center_zany:
+  sequence:
+  - service: hue.hue_activate_scene
+    data:
+      group_name: Entertainment center
+      scene_name: Zany
+  mode: single
+  alias: Entertainment Center-Zany
+entertainment_center_moonlight:
+  sequence:
+  - service: hue.hue_activate_scene
+    data:
+      group_name: Entertainment center
+      scene_name: Moonlight
+  mode: single
+  alias: Entertainment Center-Moonlight
+entertainment_center_starlight:
+  sequence:
+  - service: hue.hue_activate_scene
+    data:
+      group_name: Entertainment center
+      scene_name: Starlight
+  mode: single
+  alias: Entertainment Center-Starlight
+entertainment_center_arctic_aurora:
+  sequence:
+  - service: hue.hue_activate_scene
+    data:
+      group_name: Entertainment center
+      scene_name: Arctic aurora
+  mode: single
+  alias: Entertainment Center-Arctic aurora
+entertainment_center_night_light:
+  sequence:
+  - service: hue.hue_activate_scene
+    data:
+      group_name: Entertainment center
+      scene_name: Nightlight
+  mode: single
+  alias: Entertainment Center-Nightlight
+entertainment_center_dimmed:
+  sequence:
+  - service: hue.hue_activate_scene
+    data:
+      group_name: Entertainment center
+      scene_name: Dimmed
+  mode: single
+  alias: Entertainment Center-Dimmed
+living_room_night_light:
+  sequence:
+  - service: hue.hue_activate_scene
+    data:
+      group_name: Living Room
+      scene_name: Nightlight
+  mode: single
+  alias: Living Room-Nightlight
+living_room_dimmed:
+  sequence:
+  - service: hue.hue_activate_scene
+    data:
+      group_name: Living Room
+      scene_name: Dimmed
+  mode: single
+  alias: Living Room-Dimmed
+living_room_bright:
+  sequence:
+  - service: hue.hue_activate_scene
+    data:
+      group_name: Living room overhead
+      scene_name: Bright
+  mode: single
+  alias: Living Room-Bright
+bedroom_night_light:
+  sequence:
+  - service: hue.hue_activate_scene
+    data:
+      group_name: Bedroom
+      scene_name: Nightlight
+  mode: single
+  alias: Bedroom-Nightlight
+bedroom_dimmed:
+  sequence:
+  - service: hue.hue_activate_scene
+    data:
+      group_name: Bedroom
+      scene_name: Dimmed
+  mode: single
+  alias: Bedroom-Dimmed
+bedroom_bright:
+  sequence:
+  - service: hue.hue_activate_scene
+    data:
+      group_name: Bedroom
+      scene_name: Bright
+  mode: single
+  alias: Bedroom-Bright
+kitchen_night_light:
+  sequence:
+  - service: hue.hue_activate_scene
+    data:
+      group_name: Kitchen
+      scene_name: Nightlight
+  mode: single
+  alias: Kitchen-Nightlight
+kitchen_dimmed:
+  sequence:
+  - service: hue.hue_activate_scene
+    data:
+      group_name: Kitchen
+      scene_name: Dimmed
+  mode: single
+  alias: Kitchen-Dimmed
+kitchen_bright:
+  sequence:
+  - service: hue.hue_activate_scene
+    data:
+      group_name: Kitchen
+      scene_name: Bright
+  mode: single
+  alias: Kitchen-Bright
+tracker_battery_check:
+  alias: Battery Check
+  sequence:
+  - condition: template
+    value_template: '{%- set battery_alert_threshold = 10|int -%} {{states.device_tracker|
+      selectattr(''attributes.battery_level'', ''defined'')| selectattr(''attributes.battery_level'',''<'',
+      battery_alert_threshold ) | list | count >= 1 }}'
+  - wait_template: '{{ is_state(''script.notify_all_engines'' , ''off'') }}'
+  - service: script.notify_all_engines
+    data_template:
+      title: Low Battery
+      who: jason
+      message: '{%- set battery_alert_threshold = 10|int -%} {%- set low_batteries
+        = states.device_tracker | selectattr(''attributes.battery_level'', ''defined'')
+        | selectattr(''attributes.battery_level'',''<'', battery_alert_threshold )
+        | map(attribute=''name'') | list | join('', '') -%} Low batteries in the following
+        devices: {{ low_batteries }}'
+msg_who_is_home:
+  alias: Message who is home
+  sequence:
+  - service: notify.notify
+    data:
+      message: "{% if is_state('person.jason', 'home') %}\n  Jason in da House!\n\
+        {% else %}\n  Jason is at {{ states('person.jason') }}.\n{% endif %}\n"
+  mode: single
+full_snapshot:
+  alias: Full Snapshot
+  sequence:
+  - service: hassio.addon_stdin
+    data:
+      addon: 15d21743_samba_backup
+      input:
+        command: trigger
+        backup_name: '{type}_(Samba_Backup)-{date}-v{version}'
+  mode: single
+part_snapshot:
+  alias: 'Partial Snapshot '
+  sequence:
+  - service: hassio.addon_stdin
+    data:
+      addon: 15d21743_samba_backup
+      input:
+        command: trigger
+        exclude_addons:
+        - 15ef4d2f_esphome
+        - core_mariadb
+        exclude_folders:
+        - node-red
+        - image
+        - esphome
+        - www
+        backup_name: '{type}_(Samba_Backup)-{date}-v{version}'
+  mode: single
+watch_media:
+  alias: Watch Media
+  sequence:
+  - service: homeassistant.turn_off
+    target:
+      entity_id:
+      - light.closet
+      - group.kitchen_overhead
+      - group.bedroom_nightstand
+      - group.bedroom_overhead
+      - light.floor_lamp
+      - switch.desk_lamp
+  - scene: scene.entertainment_center_chill
+  - scene: scene.living_room_nightlight
+  - scene: scene.nick_nack_random
+  - scene: scene.kitchen_lightstrip_morning
+  - service: homeassistant.turn_on
+    target:
+      entity_id: group.entertainment_center_2
+  mode: single
+  icon: hue:lightstrip-tv
+test:
+  alias: test
+  sequence:
+  - service: androidtv.adb_command
+    data:
+      entity_id: media_player.bedroom_google_tv
+      command: POWER
+  mode: single
+  icon: mdi:alarm-light-outline
