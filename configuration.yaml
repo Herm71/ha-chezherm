@@ -27,3 +27,18 @@ homeassistant:
   customize: !include customize.yaml
   allowlist_external_dirs:
     - /config
+
+# Recorder -- Database management
+recorder:
+  purge_keep_days: 30
+  commit_interval: 60
+  
+logger:
+  default: info
+  logs:
+    homeassistant.core: fatal
+    custom_components.hacs: debug
+    hacs: debug
+    queueman: debug
+    AIOGitHubAPI: debug
+    androidtv.adb_command: info
