@@ -1,0 +1,174 @@
+- platform: lastfm
+  api_key: !secret lastfm_api_key
+  users:
+    - Herm71
+- platform: filesize
+  file_paths:
+    - /config/home-assistant_v2.db
+- platform: noaa_tides
+  station_id: 9413745
+  time_zone: lst_ldt
+  unit_system: english
+- platform: google_wifi
+  host: 192.168.86.1
+  name: Google google_wifi
+  monitored_conditions:
+    - current_version
+    - new_version
+    - uptime
+    - last_restart
+    - local_ip
+    - status
+- platform: template
+  sensors:
+    nextsunrise:
+      entity_id: sun.sun
+      friendly_name: "Next Sunrise"
+      value_template: >
+        {{ as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom(' %I:%M %p') | replace(" 0", "") }}
+      icon_template: mdi:weather-sunset-up
+    nextsunset:
+      entity_id: sun.sun
+      friendly_name: "Next Sunset"
+      value_template: >
+        {{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom(' %I:%M %p') | replace(" 0", "") }}
+      icon_template: mdi:weather-sunset-down
+- platform: moon
+- platform: season
+- platform: time_date
+  display_options:
+    - "time"
+    - "date"
+    - "date_time"
+    - "date_time_utc"
+    - "date_time_iso"
+    - "time_date"
+    - "time_utc"
+    - "beat"
+- platform: template
+  sensors:
+    weekday:
+      value_template: "{{ now().strftime('%a') }}"
+      entity_id: sensor.date
+      friendly_name: "Day of Week"
+    newdate:
+      value_template: "{{ now().strftime('%m %d %y') }}"
+      entity_id: sensor.date
+      friendly_name: "Today's Date"
+- platform: template
+  sensors:
+    lastfm_currenttrack:
+      friendly_name: "Current Track"
+      value_template: >-
+        {% if states.sensor.herm71 %}
+        {{states.sensor.herm71.state}}
+        {%endif%}
+      unique_id: lastfm.currenttrack
+    lastfm_lasttrack:
+      friendly_name: "Last Track"
+      value_template: >-
+        {% if states.sensor.herm71 %}
+        {{state_attr('sensor.herm71','last_played')}}
+        {%endif%}
+      unique_id: lastfm.lasttrack
+    lastfm_toptrack:
+      friendly_name: "Top Track"
+      value_template: >-
+        {% if states.sensor.herm71 %}
+        {{state_attr('sensor.herm71','top_played')}}
+        {%endif%}
+      unique_id: lastfm.total
+    lastfm_total:
+      friendly_name: "Total Tracks"
+      value_template: >-
+        {% if states.sensor.herm71 %}
+        {{state_attr('sensor.herm71','play_count')}}
+        {%endif%}
+      unique_id: lastfm.toptrack
+- platform: template
+  sensors:
+    plexmusic_track:
+      friendly_name: "Track"
+      value_template: >-
+        {% if states.media_player.plex_plex_cast_chromecast %}
+        {{state_attr('media_player.plex_plex_cast_chromecast','media_title')}}
+        {%endif%}
+      unique_id: plexmusic.track
+    plexmusic_artist:
+      friendly_name: "Artist"
+      value_template: >-
+        {% if states.media_player.plex_plex_cast_chromecast %}
+        {{state_attr('media_player.plex_plex_cast_chromecast','media_artist')}}
+        {%endif%}
+      unique_id: plexmusic.artist
+    plexmusic_album:
+      friendly_name: "Album"
+      value_template: >-
+        {% if states.media_player.plex_plex_cast_chromecast %}
+        {{state_attr('media_player.plex_plex_cast_chromecast','media_album_name')}}
+        {%endif%}
+      unique_id: plexmusic.album
+    plexmusic_albumart:
+      friendly_name: "Album Art"
+      value_template: >-
+        {% if states.media_player.plex_plex_cast_chromecast %}
+        {{state_attr('media_player.plex_plex_cast_chromecast','entity_picture')}}
+        {%endif%}
+      unique_id: plexmusic.albumart
+- platform: systemmonitor
+  resources:
+    - type: disk_use_percent
+    - type: memory_free
+    - type: memory_use
+    - type: memory_use_percent
+    - type: swap_use
+    - type: swap_free
+    - type: load_1m
+    - type: load_5m
+    - type: load_15m
+    - type: network_in
+      arg: "eth0"
+    - type: network_out
+      arg: "eth0"
+    - type: throughput_network_in
+      arg: "eth0"
+    - type: throughput_network_out
+      arg: "eth0"
+    - type: packets_in
+      arg: "eth0"
+    - type: packets_out
+      arg: "eth0"
+    - type: ipv4_address
+      arg: "eth0"
+    - type: ipv6_address
+      arg: "eth0"
+    - type: processor_use
+    - type: processor_temperature
+    - type: process
+      arg: "octave-cli"
+    - type: last_boot
+- platform: command_line
+  name: CPU Temperature
+  command: "cat /sys/class/thermal/thermal_zone0/temp"
+  unit_of_measurement: "°C"
+  value_template: "{{ value | multiply(0.001) | round(1) }}"
+- platform: command_line
+  name: Transmission Status
+  command: response=$(curl -LIk -m 3 http://192.168.86.111:9091 -o /dev/null -w "%{http_code}\n" -s); test "$response" -ge 200 && echo "Online" || echo "Offline"
+  scan_interval: 90
+  value_template: "{{ value }}"
+- platform: command_line
+  name: Plex Status
+  command: response=$(curl -LIk -m 3 http://192.168.86.111:32400 -o /dev/null -w "%{http_code}\n" -s); test "$response" -ge 200 && echo "Online" || echo "Offline"
+  scan_interval: 90
+  value_template: "{{ value }}"
+- platform: command_line
+  name: Emby Status
+  command: response=$(curl -LIk -m 3 http://192.168.86.111:8096 -o /dev/null -w "%{http_code}\n" -s); test "$response" -ge 200 && echo "Online" || echo "Offline"
+  scan_interval: 90
+  value_template: "{{ value }}"
+- platform: command_line
+  name: Flexget Status
+  command: response=$(curl -LIk -m 3 http://192.168.86.111:5050 -o /dev/null -w "%{http_code}\n" -s); test "$response" -ge 200 && echo "Online" || echo "Offline"
+  scan_interval: 90
+  value_template: "{{ value }}"
