@@ -1,0 +1,10 @@
+# Customize Plex Media Players
+#media_player.plex_plex_cast_chromecast:
+  #friendly_name: Plex Chromecast Player - Server
+  ## Additional varialbles available
+  #entity_picture: https://example.com/images/nest.jpg
+  #device_class:
+  #icon:
+  #assumed_state:
+  #unit_of_measurement:
+  #initial_state:
