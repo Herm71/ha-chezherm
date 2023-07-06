@@ -15,17 +15,12 @@
     data: {}
     target:
       area_id:
-      - bedroom
-      - closet
       - entertainment_center
+      - closet
+      - bedroom
       - kitchen
       - living_room
       - office
-      entity_id:
-      - media_player.jason_s_group
-      - media_player.bedroom_google_tv
-      - media_player.googletv_entertainment_center
-      - media_player.kitchen_google_tv
   mode: single
 - id: '1591915766628'
   alias: Off at 10 PM
