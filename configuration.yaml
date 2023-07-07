@@ -31,6 +31,9 @@ homeassistant:
   allowlist_external_dirs:
     - /config
 
+# Enable Wake ON Lan
+wake_on_lan:
+
 # Recorder -- Database management
 recorder:
   purge_keep_days: 30
@@ -61,3 +64,5 @@ command_line:
       command: 'cat /sys/class/thermal/thermal_zone0/temp'
       unit_of_measurement: "°C"
       value_template: "{{ value | multiply(0.001) | round(2) }}"
+      
+

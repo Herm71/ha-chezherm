@@ -71,8 +71,6 @@
       entity_id:
       - light.living_1
       - light.living_2
-      - light.floor_lamp
-      - light.kitchen_cabinet_lightstrip
     data:
       transition: 600
       brightness: 255
@@ -82,9 +80,11 @@
       - group.bedroom_overhead
       - group.kitchen_overhead
       - group.entertainment_center
+    data: {}
   - service: homeassistant.turn_on
     target:
       entity_id: group.bedroom_nightstand
+    data: {}
   mode: single
 - id: '1593448013742'
   alias: Sunset
