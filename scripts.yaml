@@ -148,8 +148,8 @@ msg_who_is_home:
   sequence:
   - service: notify.notify
     data:
-      message: "{% if is_state('person.jason', 'home') %}\n  Jason in da House!\n\
-        {% else %}\n  Jason is at {{ states('person.jason') }}.\n{% endif %}\n"
+      message: "{% if is_state('person.jason', 'home') %}\n  Jason in da House!\n{%
+        else %}\n  Jason is at {{ states('person.jason') }}.\n{% endif %}\n"
   mode: single
 full_snapshot:
   alias: Full Snapshot
@@ -191,6 +191,7 @@ watch_media:
       - group.bedroom_overhead
       - light.floor_lamp
       - switch.desk_lamp
+    data: {}
   - scene: scene.entertainment_center_chill
   - scene: scene.living_room_nightlight
   - scene: scene.nick_nack_random
@@ -198,8 +199,9 @@ watch_media:
   - service: homeassistant.turn_on
     target:
       entity_id: group.entertainment_center_2
+    data: {}
   mode: single
-  icon: hue:lightstrip-tv
+  icon: mdi:television
 test:
   alias: test
   sequence:
