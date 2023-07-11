@@ -21,6 +21,7 @@
       - kitchen
       - living_room
       - office
+      entity_id: media_player.jason_s_group
   - service: remote.turn_off
     data: {}
     target:
@@ -46,8 +47,8 @@
       - light.kitchen_cabinet_lightstrip
   mode: single
 - id: '1591917817012'
-  alias: Wake-up
-  description: Turn on lights at first alarm
+  alias: Morning 5AM
+  description: Turn on lights at 5AM
   trigger:
   - at: 05:00:00
     platform: time
@@ -59,6 +60,10 @@
   - scene: scene.kitchen_lightstrip_morning
     enabled: false
   - scene: scene.nick_nack_random
+  - service: scene.turn_on
+    target:
+      entity_id: scene.office_bright
+    metadata: {}
   mode: single
 - id: '1592782675006'
   alias: Morning 7AM
@@ -122,17 +127,21 @@
       entity_id:
       - group.bedroom_nightstand
       - group.entertainment_center_2
+    enabled: false
   - service: scene.turn_on
     target:
-      entity_id: scene.living_room_bright
+      entity_id: scene.office_bright
     metadata: {}
-  - scene: scene.kitchen_prep
-    enabled: false
+  - service: scene.turn_on
+    target:
+      entity_id: scene.kitchen_bright
+    metadata: {}
   - scene: scene.nick_nack_random
   - type: turn_on
     device_id: 791699cd1a9d5804335ac54577f0fd3c
     entity_id: switch.xtra_plug
     domain: switch
+    enabled: false
   mode: single
 - id: '1606329407790'
   alias: Away Nighttime
