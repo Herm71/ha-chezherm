@@ -1,79 +1,73 @@
 - id: '1591806183827'
   name: Kitchen Prep
   entities:
-    light.kitchen_cabinet_lightstrip:
-      effect_list:
-      - None
-      - Random
-      supported_color_modes:
-      - rgb
-      color_mode: rgb
-      brightness: 255
-      hs_color:
-      - 75.818
-      - 43.137
-      rgb_color:
-      - 226
-      - 255
-      - 145
-      xy_color:
-      - 0.361
-      - 0.459
-      effect: None
-      friendly_name: Kitchen Cabinet Lightstrip
-      supported_features: 44
-      state: 'on'
     light.kitchen_1:
       supported_color_modes:
       - brightness
-      color_mode: brightness
-      brightness: 255
       mode: normal
       dynamics: none
-      icon: hue:bulb-classic-hung
       friendly_name: Kitchen 1
       supported_features: 40
+      color_mode: brightness
+      brightness: 255
       state: 'on'
     light.kitchen_2:
       supported_color_modes:
       - brightness
-      color_mode: brightness
-      brightness: 255
       mode: normal
       dynamics: none
-      icon: hue:bulb-classic-hung
       friendly_name: Kitchen 2
       supported_features: 40
+      color_mode: brightness
+      brightness: 255
+      state: 'on'
+    light.kitchen_light_strip:
+      min_color_temp_kelvin: 2500
+      max_color_temp_kelvin: 6500
+      min_mireds: 153
+      max_mireds: 400
+      effect_list:
+      - BubblingCauldron
+      - Aurora
+      - CandyCane
+      - Christmas
+      - Flicker
+      - ChristmasLight
+      - Hanukkah
+      - HauntedMansion
+      - Icicle
+      - Lightning
+      - Ocean
+      - Rainbow
+      - Raindrop
+      - Spring
+      - Sunrise
+      - Sunset
+      - Valentines
+      supported_color_modes:
+      - brightness
+      - color_temp
+      - hs
+      - onoff
+      friendly_name: Kitchen Light Strip
+      supported_features: 4
+      color_mode: color_temp
+      brightness: 255
+      color_temp_kelvin: 6535
+      color_temp: 153
+      hs_color:
+      - 54.768
+      - 1.6
+      rgb_color:
+      - 255
+      - 254
+      - 250
+      xy_color:
+      - 0.326
+      - 0.333
       state: 'on'
   icon: hue:room-kitchen
-- id: '1591917551060'
-  name: Kitchen Lightstrip Morning
-  entities:
-    light.kitchen_cabinet_lightstrip:
-      brightness: 156
-      effect: None
-      effect_list:
-      - None
-      - Random
-      friendly_name: Kitchen Cabinet Lightstrip
-      hs_color:
-      - 75.205
-      - 57.255
-      rgb_color:
-      - 218
-      - 255
-      - 108
-      state: 'on'
-      supported_features: 61
-      xy_color:
-      - 0.371
-      - 0.503
-    switch.kitchen_cabinet_lightstrip_switch:
-      friendly_name: Kitchen Cabinet Lightstrip Switch
-      icon: ''
-      restored: true
-      state: unavailable
-      supported_features: 0
+  metadata: {}
 - id: '1592782836171'
   name: Bong Lamp LED Random
   entities:
@@ -140,35 +134,6 @@
       xy_color:
       - 0.139
       - 0.081
-- id: '1607798580974'
-  name: Kitchen Lightstrip Random
-  entities:
-    light.kitchen_cabinet_lightstrip:
-      effect_list:
-      - None
-      - Random
-      brightness: 255
-      hs_color:
-      - 193.393
-      - 48.761
-      rgb_color:
-      - 130
-      - 227
-      - 255
-      xy_color:
-      - 0.205
-      - 0.298
-      effect: Random
-      friendly_name: Kitchen Cabinet Lightstrip
-      supported_features: 61
-      state: 'on'
-    light.spice_rack_light:
-      effect_list:
-      - None
-      - Random
-      friendly_name: Spice Rack Light
-      supported_features: 61
-      state: 'off'
 - id: '1642956310005'
   name: Living Room Overhead Bright
   entities:
