@@ -45,6 +45,7 @@
       entity_id:
       - group.nick_nacks
       - light.kitchen_cabinet_lightstrip
+      - group.entertainment_center_2
   mode: single
 - id: '1591917817012'
   alias: Morning 5AM
@@ -57,13 +58,15 @@
     entity_id: device_tracker.pixel_6_pro_2
     zone: zone.home
   action:
-  - scene: scene.kitchen_lightstrip_morning
-    enabled: false
   - scene: scene.nick_nack_random
   - service: scene.turn_on
     target:
       entity_id: scene.office_bright
     metadata: {}
+  - service: homeassistant.turn_on
+    data: {}
+    target:
+      entity_id: group.entertainment_center_2
   mode: single
 - id: '1592782675006'
   alias: Morning 7AM
@@ -112,7 +115,7 @@
   - service: hue.activate_scene
     data: {}
     target:
-      entity_id: scene.entertainment_center_golden_hour
+      entity_id: scene.entertainment_center_chill
   mode: single
 - id: '1605646082723'
   alias: Arrive Home
@@ -124,20 +127,9 @@
     event: enter
   condition: []
   action:
-  - service: homeassistant.turn_on
-    data: {}
-    target:
-      entity_id:
-      - group.bedroom_nightstand
-      - group.entertainment_center_2
-    enabled: false
   - service: scene.turn_on
     target:
       entity_id: scene.office_bright
-    metadata: {}
-  - service: scene.turn_on
-    target:
-      entity_id: scene.kitchen_bright
     metadata: {}
   - scene: scene.nick_nack_random
   - type: turn_on
@@ -145,6 +137,16 @@
     entity_id: switch.xtra_plug
     domain: switch
     enabled: false
+  - service: light.turn_on
+    data:
+      color_name: white
+      brightness_pct: 50
+    target:
+      entity_id: light.kitchen_light_strip
+  - service: scene.turn_on
+    target:
+      entity_id: scene.bedroom_bright
+    metadata: {}
   mode: single
 - id: '1606329407790'
   alias: Away Nighttime
