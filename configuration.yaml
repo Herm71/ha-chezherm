@@ -104,7 +104,6 @@ media_player:
       com.google.android.apps.tv.launcherx: "Google TV"
       com.google.android.youtube.tvunplugged: "YouTube TV"
     #adbkey: "/config/.android/adbkey"
-
 sensor:
   - platform: time_date
     display_options:
@@ -115,8 +114,6 @@ sensor:
     name: 'Monterey Bay Tides'
     time_zone: lst_ldt
     unit_system: english
-      
-  # Build on the standard sensor to produce one that can be customized
   - platform: template
     sensors:
         jc_date_and_time:
@@ -133,7 +130,7 @@ sensor:
             icon_template: mdi:calendar-month
         jc_time:
             friendly_name: "Time"
-            value_template: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%I:%M %p') }}"
+            value_template: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%I:%M') }}"
             icon_template: mdi:clock-time-three
         jc_day_night:
             friendly_name: "Day/Night"
@@ -149,3 +146,6 @@ sensor:
                 {% else %}
                     mdi:weather-night
                 {% endif %}
+  - platform: google_wifi
+    host: 192.168.86.1
+       

@@ -21,11 +21,14 @@
       - kitchen
       - living_room
       - office
-      entity_id: media_player.jason_s_group
+      entity_id:
+      - media_player.jason_s_group
+      - media_player.lg_webos_tv_2627
   - service: remote.turn_off
     data: {}
     target:
       entity_id: remote.entertainment_center_tv
+    enabled: false
   mode: single
 - id: '1591915766628'
   alias: Off at 10 PM
