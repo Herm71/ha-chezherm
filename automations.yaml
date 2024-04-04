@@ -38,17 +38,13 @@
     platform: time
   condition: []
   action:
-  - type: turn_off
-    device_id: c14e4472491daf9e3e731750d4601fe1
-    entity_id: light.kitchen_cabinet_lightstrip
-    domain: light
   - service: homeassistant.turn_off
     data: {}
     target:
       entity_id:
       - group.nick_nacks
-      - light.kitchen_cabinet_lightstrip
       - group.entertainment_center_2
+      - light.kitchen_light_strip
   mode: single
 - id: '1591917817012'
   alias: Morning 5AM
@@ -69,7 +65,9 @@
   - service: homeassistant.turn_on
     data: {}
     target:
-      entity_id: group.entertainment_center_2
+      entity_id:
+      - group.entertainment_center_2
+      - group.bedroom_nightstand
   mode: single
 - id: '1592782675006'
   alias: Morning 7AM
@@ -135,21 +133,18 @@
       entity_id: scene.office_bright
     metadata: {}
   - scene: scene.nick_nack_random
-  - type: turn_on
-    device_id: 791699cd1a9d5804335ac54577f0fd3c
-    entity_id: switch.xtra_plug
-    domain: switch
-    enabled: false
   - service: light.turn_on
     data:
       color_name: white
       brightness_pct: 50
     target:
       entity_id: light.kitchen_light_strip
-  - service: scene.turn_on
+  - service: homeassistant.turn_on
+    data: {}
     target:
-      entity_id: scene.bedroom_bright
-    metadata: {}
+      entity_id:
+      - group.bedroom_nightstand
+      - scene.living_room_bright
   mode: single
 - id: '1606329407790'
   alias: Away Nighttime

@@ -49,12 +49,8 @@
       - color_temp
       - hs
       - onoff
-      friendly_name: Kitchen Light Strip
-      supported_features: 4
       color_mode: color_temp
       brightness: 255
-      color_temp_kelvin: 6535
-      color_temp: 153
       hs_color:
       - 54.768
       - 1.6
@@ -65,9 +61,13 @@
       xy_color:
       - 0.326
       - 0.333
+      friendly_name: Kitchen Light Strip
+      supported_features: 4
+      color_temp_kelvin: 6535
+      color_temp: 153
       state: 'on'
-  icon: hue:room-kitchen
   metadata: {}
+  icon: mdi:palette
 - id: '1592782836171'
   name: Bong Lamp LED Random
   entities:

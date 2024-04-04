@@ -21,8 +21,8 @@ bedroom_overhead:
 bedroom_nightstand:
   name: Bedroom nightstand lamps
   entities:
-    - switch.italian_vase_lamp
-    - switch.bong_lamp
+    - switch.italian_vase_lamp_2
+    - switch.bong_lamp_2
 livingroom_overhead:
   name: Living Room Overhead Lights
   entities:

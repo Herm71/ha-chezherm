@@ -205,9 +205,10 @@ watch_media:
 test:
   alias: test
   sequence:
-  - service: androidtv.adb_command
+  - service: light.turn_on
     data:
-      entity_id: media_player.bedroom_google_tv
-      command: POWER
+      effect: rainbow
+    target:
+      device_id: 19d00efccbdff26b6073413474b8f436
   mode: single
   icon: mdi:alarm-light-outline
