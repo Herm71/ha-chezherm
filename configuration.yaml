@@ -14,10 +14,38 @@ script: !include scripts.yaml
 scene: !include scenes.yaml
 sensor: !include sensors.yaml
 
+# Google Assistant
 google_assistant:
   project_id: home-assistant-89980
   service_account: !include SERVICE_ACCOUNT.JSON
   report_state: true
+  exposed_by_default: false
+  entity_config:
+    switch.switch_group_4:
+      expose: true
+      name: Bedroom Nightstand Lamps
+      aliases:
+        - Nightstand Lamps
+        - Nightstand Lights
+      room: Bedroom
+    light.light_group:
+      expose: true
+      name: Bedroom Overhead Lights
+      aliases:
+        - Bedroom Overhead
+      room: Bedroom
+    light.living_room_overhead_lights:
+      expose: true
+      name: Living Room Overhead Lights
+      aliases:
+        - Living Room Overhead
+      room: Living Room
+    light.kitchen_overhead_lights:
+      expose: true
+      name: Kitchen Overhead Lights
+      aliases:
+        - Kitchen Overhead
+      room: Kitchen
 
 homeassistant:
   name: Chez Herm
@@ -119,4 +147,3 @@ light:
     entities:
       - light.rock_and_rye_light
       - light.pocket_watch_light
-
