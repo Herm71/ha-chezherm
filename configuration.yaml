@@ -91,7 +91,7 @@ light:
       - light.bed_1
       - light.bed_2
   - platform: group
-    name: "Entertainment Center Hue"
+    name: "Hue Lights"
     unique_id: light.entertainment_hue
     entities:
       - light.flood_1
