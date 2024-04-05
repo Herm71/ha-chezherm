@@ -75,4 +75,4 @@ switch:
     entities:
       - switch.lava_lamp
       - switch.salt_lamp
-    unique_id: speaker_lights
+    unique_id: switch.speakerlights
