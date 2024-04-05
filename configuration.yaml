@@ -9,7 +9,6 @@ frontend:
 tts:
   - platform: google_translate
 
-group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
@@ -69,10 +68,55 @@ command_line:
       value_template: "{{ value | multiply(0.001) | round(2) }}"
 
 # Groups
-# Example configuration.yaml entry
 switch:
   - platform: group
+    name: "Speaker Lights"
+    unique_id: switch.speaker_lights
     entities:
       - switch.lava_lamp
       - switch.salt_lamp
-    unique_id: switch.speakerlights
+  - platform: group
+    name: "Bedroom Nightstand Lamps"
+    unique_id: switch.bedroom_nightstand
+    entities:
+      - switch.italian_vase_lamp_2
+      - switch.bong_lamp_2
+
+# Example configuration.yaml entry
+light:
+  - platform: group
+    name: "Bedroom Overhead Lights"
+    unique_id: light.bedroom_overhead
+    entities:
+      - light.bed_1
+      - light.bed_2
+  - platform: group
+    name: "Entertainment Center Hue"
+    unique_id: light.entertainment_hue
+    entities:
+      - light.flood_1
+      - light.flood_2
+      - light.flood_3
+      - light.flood_4
+      - light.flood_5
+      - light.flood_6
+      - light.lightstrip
+  - platform: group
+    name: "Living Room Overhead Lights"
+    unique_id: light.living_overhead
+    entities:
+      - light.living_1
+      - light.living_2
+  - platform: group
+    name: "Kitchen Overhead Lights"
+    unique_id: light.kitchen_overhead
+    entities:
+      - light.kitchen_1
+      - light.kitchen_2
+  - platform: group
+    name: "Red Cabinet Lights"
+    unique_id: light.knick_knacks
+    entities:
+      - light.rock_and_rye_light
+      - light.pocket_watch_light
+

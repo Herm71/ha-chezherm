@@ -2,7 +2,7 @@
   station_id: 9413745
   time_zone: lst_ldt
   unit_system: english
-  name: 'Monterey Bay Tides'
+  name: "Monterey Bay Tides"
 - platform: google_wifi
   host: 192.168.86.1
   name: Google google_wifi
@@ -28,35 +28,35 @@
         {{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom(' %I:%M %p') | replace(" 0", "") }}
       icon_template: mdi:weather-sunset-down
     jc_date_and_time:
-        friendly_name: "Date and Time"
-        value_template: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%A %B %-d, %I:%M %p') }}"
-        icon_template: mdi:calendar-clock
+      friendly_name: "Date and Time"
+      value_template: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%A %B %-d, %I:%M %p') }}"
+      icon_template: mdi:calendar-clock
     jc_day:
-        friendly_name: "Day"
-        value_template: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%A') }}"
-        icon_template: mdi:calendar-today
+      friendly_name: "Day"
+      value_template: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%A') }}"
+      icon_template: mdi:calendar-today
     jc_month:
-        friendly_name: "Month"
-        value_template: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%B %-d') }}"
-        icon_template: mdi:calendar-month
+      friendly_name: "Month"
+      value_template: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%B %-d') }}"
+      icon_template: mdi:calendar-month
     jc_time:
-        friendly_name: "Time"
-        value_template: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%I:%M') }}"
-        icon_template: mdi:clock-time-three
+      friendly_name: "Time"
+      value_template: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%I:%M') }}"
+      icon_template: mdi:clock-time-three
     jc_day_night:
-        friendly_name: "Day/Night"
-        value_template: >-
-            {% if is_state('sun.sun', 'above_horizon') %}
-                Day
-            {% else %}
-                Night
-            {% endif %}
-        icon_template: >-
-            {% if is_state('sun.sun', 'above_horizon') %}
-                mdi:weather-sunny
-            {% else %}
-                mdi:weather-night
-            {% endif %}
+      friendly_name: "Day/Night"
+      value_template: >-
+        {% if is_state('sun.sun', 'above_horizon') %}
+            Day
+        {% else %}
+            Night
+        {% endif %}
+      icon_template: >-
+        {% if is_state('sun.sun', 'above_horizon') %}
+            mdi:weather-sunny
+        {% else %}
+            mdi:weather-night
+        {% endif %}
 - platform: time_date
   display_options:
     - "time"
@@ -66,7 +66,6 @@
     - "date_time_iso"
     - "time_date"
     - "time_utc"
-    - "beat"
 - platform: template
   sensors:
     weekday:
@@ -137,36 +136,18 @@
         {{state_attr('media_player.plex_plex_cast_chromecast','entity_picture')}}
         {%endif%}
       unique_id: plexmusic.albumart
-- platform: systemmonitor
-  resources:
-    - type: disk_use_percent
-    - type: memory_free
-    - type: memory_use
-    - type: memory_use_percent
-    - type: swap_use
-    - type: swap_free
-    - type: load_1m
-    - type: load_5m
-    - type: load_15m
-    - type: network_in
-      arg: "eth0"
-    - type: network_out
-      arg: "eth0"
-    - type: throughput_network_in
-      arg: "eth0"
-    - type: throughput_network_out
-      arg: "eth0"
-    - type: packets_in
-      arg: "eth0"
-    - type: packets_out
-      arg: "eth0"
-    - type: ipv4_address
-      arg: "eth0"
-    - type: ipv6_address
-      arg: "eth0"
-    - type: processor_use
-    - type: processor_temperature
-    - type: process
-      arg: "octave-cli"
-    - type: last_boot
-
+- platform: group
+  unique_id: sensor.internet
+  name: "Internet"
+  type: last
+  entities:
+    - sensor.hass_uptime
+    - sensor.google_wifi_status
+    - sensor.google_wifi_uptime
+    - sensor.google_wifi_local_ip
+    - sensor.google_wifi_last_restart
+    - sensor.google_wifi_current_version
+    - sensor.google_wifi_new_version
+    - sensor.speedtest_download
+    - sensor.speedtest_upload
+    - sensor.speedtest_ping
