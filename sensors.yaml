@@ -154,4 +154,5 @@
     last_timestamp:
       friendly_name: "Last Added Time"
       entity_id: sensor.hermserver_library_music
-      value_template: "{{ state_attr('sensor.hermserver_library_music', 'last_added_timestamp') }}"
+      unit_of_measurement: "time"
+      value_template: "{{ as_timestamp(state_attr('sensor.hermserver_library_music', 'last_added_timestamp')) | timestamp_custom('%d.%m.%Y %-H:%M') }}"
