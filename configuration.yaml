@@ -19,7 +19,7 @@ google_assistant:
   project_id: home-assistant-89980
   service_account: !include SERVICE_ACCOUNT.JSON
   report_state: true
-  exposed_by_default: false
+  expose_by_default: false
   entity_config:
     switch.switch_group_4:
       expose: true
