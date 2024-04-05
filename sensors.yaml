@@ -136,3 +136,4 @@
         {{state_attr('media_player.plex_plex_cast_chromecast','entity_picture')}}
         {%endif%}
       unique_id: plexmusic.albumart
+- platform: google_wifi
