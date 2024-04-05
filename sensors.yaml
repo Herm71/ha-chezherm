@@ -136,18 +136,3 @@
         {{state_attr('media_player.plex_plex_cast_chromecast','entity_picture')}}
         {%endif%}
       unique_id: plexmusic.albumart
-- platform: group
-  unique_id: sensor.internet
-  name: "Internet"
-  type: last
-  entities:
-    - sensor.hass_uptime
-    - sensor.google_wifi_status
-    - sensor.google_wifi_uptime
-    - sensor.google_wifi_local_ip
-    - sensor.google_wifi_last_restart
-    - sensor.google_wifi_current_version
-    - sensor.google_wifi_new_version
-    - sensor.speedtest_download
-    - sensor.speedtest_upload
-    - sensor.speedtest_ping
