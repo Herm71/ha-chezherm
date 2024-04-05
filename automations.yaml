@@ -22,8 +22,8 @@
       - living_room
       - office
       entity_id:
-      - media_player.jason_s_group
       - media_player.lg_webos_tv_2627
+      - media_player.jason_s_group_2
   - service: remote.turn_off
     data: {}
     target:

@@ -139,6 +139,7 @@
 - platform: google_wifi
 - platform: template
   sensors:
+    # Music
     album_count:
       friendly_name: "Album Count"
       entity_id: sensor.hermserver_library_music
@@ -147,12 +148,29 @@
       friendly_name: "Artist Count"
       entity_id: sensor.hermserver_library_music
       value_template: "{{ state_attr('sensor.hermserver_library_music', 'artists') }}"
-    last_added:
-      friendly_name: "Last Added Item"
+    last_added_music:
+      friendly_name: "Last Music Added"
       entity_id: sensor.hermserver_library_music
       value_template: "{{ state_attr('sensor.hermserver_library_music', 'last_added_item') }}"
-    last_timestamp:
-      friendly_name: "Last Added Time"
+    last_timestamp_music:
+      friendly_name: "Last Music Added Time"
       entity_id: sensor.hermserver_library_music
-      unit_of_measurement: "time"
-      value_template: "{{ as_timestamp(state_attr('sensor.hermserver_library_music', 'last_added_timestamp')) | timestamp_custom('%d.%m.%Y %-H:%M') }}"
+      value_template: "{{ state_attr('sensor.hermserver_library_music', 'last_added_timestamp') }}"
+    # Movies
+    last_added_movies:
+      friendly_name: "Last Movie Added"
+      entity_id: sensor.hermserver_library_movies
+      value_template: "{{ state_attr('sensor.hermserver_library_movies', 'last_added_item') }}"
+    last_timestamp_movies:
+      friendly_name: "Last Movie Added Time"
+      entity_id: sensor.hermserver_library_movies
+      value_template: "{{ state_attr('sensor.hermserver_library_movies', 'last_added_timestamp') }}"
+    # TV Shows
+    last_added_tv_shows:
+      friendly_name: "Last TV Show Added"
+      entity_id: sensor.hermserver_library_tv_shows
+      value_template: "{{ state_attr('sensor.hermserver_library_tv_shows', 'last_added_item') }}"
+    last_timestamp_tv_shows:
+      friendly_name: "Last TV Show Added Time"
+      entity_id: sensor.hermserver_library_tv_shows
+      value_template: "{{ state_attr('sensor.hermserver_library_tv_shows', 'last_added_timestamp') }}"
