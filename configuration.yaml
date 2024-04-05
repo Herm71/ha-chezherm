@@ -1,4 +1,3 @@
-
 # Loads default set of integrations. Do not remove.
 default_config:
 
@@ -15,7 +14,11 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 sensor: !include sensors.yaml
-#google_assistant: !include_dir_merge_named googleassistant/
+
+google_assistant:
+  project_id: home-assistant-89980
+  service_account: !include SERVICE_ACCOUNT.JSON
+  report_state: true
 
 homeassistant:
   name: Chez Herm
@@ -38,7 +41,7 @@ wake_on_lan:
 recorder:
   purge_keep_days: 30
   commit_interval: 60
-  
+
 logger:
   default: info
   logs:
@@ -57,54 +60,10 @@ duckdns:
 http:
   ssl_certificate: /ssl/fullchain.pem
   ssl_key: /ssl/privkey.pem
-  
+
 command_line:
   - sensor:
       name: CPU Temperature
-      command: 'cat /sys/class/thermal/thermal_zone0/temp'
+      command: "cat /sys/class/thermal/thermal_zone0/temp"
       unit_of_measurement: "°C"
       value_template: "{{ value | multiply(0.001) | round(2) }}"
-sensor:
-  - platform: time_date
-    display_options:
-      - 'date_time_iso'
-  - platform: noaa_tides
-    station_id: 9413745
-    name: 'Monterey Bay Tides'
-    time_zone: lst_ldt
-    unit_system: english
-  - platform: template
-    sensors:
-        jc_date_and_time:
-            friendly_name: "Date and Time"
-            value_template: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%A %B %-d, %I:%M %p') }}"
-            icon_template: mdi:calendar-clock
-        jc_day:
-            friendly_name: "Day"
-            value_template: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%A') }}"
-            icon_template: mdi:calendar-today
-        jc_month:
-            friendly_name: "Month"
-            value_template: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%B %-d') }}"
-            icon_template: mdi:calendar-month
-        jc_time:
-            friendly_name: "Time"
-            value_template: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%I:%M') }}"
-            icon_template: mdi:clock-time-three
-        jc_day_night:
-            friendly_name: "Day/Night"
-            value_template: >-
-                {% if is_state('sun.sun', 'above_horizon') %}
-                    Day
-                {% else %}
-                    Night
-                {% endif %}
-            icon_template: >-
-                {% if is_state('sun.sun', 'above_horizon') %}
-                    mdi:weather-sunny
-                {% else %}
-                    mdi:weather-night
-                {% endif %}
-  - platform: google_wifi
-    host: 192.168.86.1
-       

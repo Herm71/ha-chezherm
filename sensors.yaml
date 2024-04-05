@@ -2,6 +2,7 @@
   station_id: 9413745
   time_zone: lst_ldt
   unit_system: english
+  name: 'Monterey Bay Tides'
 - platform: google_wifi
   host: 192.168.86.1
   name: Google google_wifi
@@ -26,6 +27,36 @@
       value_template: >
         {{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom(' %I:%M %p') | replace(" 0", "") }}
       icon_template: mdi:weather-sunset-down
+    jc_date_and_time:
+        friendly_name: "Date and Time"
+        value_template: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%A %B %-d, %I:%M %p') }}"
+        icon_template: mdi:calendar-clock
+    jc_day:
+        friendly_name: "Day"
+        value_template: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%A') }}"
+        icon_template: mdi:calendar-today
+    jc_month:
+        friendly_name: "Month"
+        value_template: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%B %-d') }}"
+        icon_template: mdi:calendar-month
+    jc_time:
+        friendly_name: "Time"
+        value_template: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%I:%M') }}"
+        icon_template: mdi:clock-time-three
+    jc_day_night:
+        friendly_name: "Day/Night"
+        value_template: >-
+            {% if is_state('sun.sun', 'above_horizon') %}
+                Day
+            {% else %}
+                Night
+            {% endif %}
+        icon_template: >-
+            {% if is_state('sun.sun', 'above_horizon') %}
+                mdi:weather-sunny
+            {% else %}
+                mdi:weather-night
+            {% endif %}
 - platform: time_date
   display_options:
     - "time"
