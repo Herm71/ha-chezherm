@@ -67,3 +67,12 @@ command_line:
       command: "cat /sys/class/thermal/thermal_zone0/temp"
       unit_of_measurement: "°C"
       value_template: "{{ value | multiply(0.001) | round(2) }}"
+
+# Groups
+# Example configuration.yaml entry
+switch:
+  - platform: group
+    entities:
+      - switch.lava_lamp
+      - switch.salt_lamp
+    unique_id: speaker_lights
