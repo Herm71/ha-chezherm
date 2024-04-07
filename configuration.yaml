@@ -97,6 +97,7 @@ command_line:
 
 # LastFM Scrobbler
 lastfm_scrobbler:
+  unique_id: lastfm.scrobbler
   API_KEY: !secret API_KEY
   API_SECRET: !secret API_SECRET
   SESSION_KEY: !secret SESSION_KEY

@@ -82,16 +82,9 @@
       friendly_name: "Current Track"
       value_template: >-
         {% if states.sensor.herm71 %}
-        {{states.sensor.herm71.state}}
-        {%endif%}
-      unique_id: lastfm.currenttrack
-    lastfm_lasttrack:
-      friendly_name: "Last Track"
-      value_template: >-
-        {% if states.sensor.herm71 %}
         {{state_attr('sensor.herm71','last_played')}}
         {%endif%}
-      unique_id: lastfm.lasttrack
+      unique_id: lastfm.currenttrack
     lastfm_toptrack:
       friendly_name: "Top Track"
       value_template: >-
@@ -136,7 +129,6 @@
         {{state_attr('media_player.plex_plex_cast_chromecast','entity_picture')}}
         {%endif%}
       unique_id: plexmusic.albumart
-- platform: google_wifi
 - platform: template
   sensors:
     # Music
