@@ -22,13 +22,15 @@
       - living_room
       - office
       entity_id:
-      - media_player.lg_webos_tv_2627
       - media_player.jason_s_group_2
   - service: remote.turn_off
     data: {}
     target:
-      entity_id: remote.entertainment_center_tv
-    enabled: false
+      entity_id:
+      - remote.entertainment_center_tv
+      - remote.bedroom_tv
+      - remote.kitchen_tv
+    enabled: true
   mode: single
 - id: '1591915766628'
   alias: Off at 10 PM
@@ -90,7 +92,6 @@
     data:
       transition: 300
       brightness_pct: 100
-      brightness_step_pct: 20
     target:
       entity_id:
       - light.floor_lamp
@@ -118,7 +119,7 @@
   description: Arrive home
   trigger:
   - platform: zone
-    entity_id: person.jason
+    entity_id: device_tracker.pixel_8_pro_2
     zone: zone.home
     event: enter
   condition: []
