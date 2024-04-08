@@ -185,22 +185,25 @@ watch_media:
   - service: homeassistant.turn_off
     target:
       entity_id:
-      - light.closet
-      - group.kitchen_overhead
-      - group.bedroom_nightstand
-      - group.bedroom_overhead
-      - light.floor_lamp
-      - switch.desk_lamp
+      - light.kitchen_overhead_lights
+      area_id:
+      - bedroom
+      - closet
+      - living_room
+      - office
     data: {}
   - scene: scene.entertainment_center_chill
-  - scene: scene.living_room_nightlight
   - scene: scene.nick_nack_random
-  - scene: scene.kitchen_lightstrip_morning
   - service: homeassistant.turn_on
     target:
       entity_id:
       - switch.switch_group_3
     data: {}
+  - service: light.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: light.kitchen_light_strip
   mode: single
   icon: mdi:television
 test:
