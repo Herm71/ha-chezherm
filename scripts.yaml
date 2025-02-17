@@ -209,6 +209,10 @@ watch_media:
     target:
       entity_id: light.kitchen_light_strip
     action: light.turn_on
+  - type: turn_off
+    device_id: 5c47012610deaf82ac2ba211ebb6f78b
+    entity_id: 7fe482601a86d69a4784fbcce7fd6db4
+    domain: light
   mode: single
   icon: mdi:television
 test:
