@@ -182,28 +182,33 @@ part_snapshot:
 watch_media:
   alias: Watch Media
   sequence:
-  - service: homeassistant.turn_off
-    target:
-      entity_id:
-      - light.kitchen_overhead_lights
+  - target:
       area_id:
       - bedroom
       - closet
       - living_room
       - office
+      entity_id: light.kitchen
     data: {}
-  - scene: scene.entertainment_center_chill
-  - scene: scene.nick_nack_random
-  - service: homeassistant.turn_on
+    action: homeassistant.turn_off
+  - action: scene.turn_on
     target:
+      entity_id: scene.entertainment_center_chill
+    data: {}
+  - action: scene.turn_on
+    target:
+      entity_id: scene.nick_nack_random
+    data: {}
+  - target:
       entity_id:
       - switch.switch_group_3
     data: {}
-  - service: light.turn_on
-    metadata: {}
+    action: homeassistant.turn_on
+  - metadata: {}
     data: {}
     target:
       entity_id: light.kitchen_light_strip
+    action: light.turn_on
   mode: single
   icon: mdi:television
 test:
@@ -216,3 +221,29 @@ test:
       device_id: 19d00efccbdff26b6073413474b8f436
   mode: single
   icon: mdi:alarm-light-outline
+zoom_meeting:
+  alias: Zoom Meeting
+  sequence:
+  - type: turn_off
+    device_id: 8597b5f2df8b9ccedfbfa674c2a1647a
+    entity_id: 1529ed9c5ca5191568c8c2a2ed86eaac
+    domain: light
+  - type: turn_off
+    device_id: 5c47012610deaf82ac2ba211ebb6f78b
+    entity_id: 7fe482601a86d69a4784fbcce7fd6db4
+    domain: light
+  - metadata: {}
+    data: {}
+    target:
+      area_id:
+      - kitchen
+      - bedroom
+      - entertainment_center
+      entity_id:
+      - media_player.jason_s_group_2
+      - media_player.kitchen_speakers
+      - media_player.living_room_speaker
+      - media_player.bedroom_speaker
+    action: media_player.turn_off
+  mode: single
+  icon: mdi:monitor-account

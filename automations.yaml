@@ -11,8 +11,7 @@
     before: sunset
     after: sunrise
   action:
-  - service: homeassistant.turn_off
-    data: {}
+  - data: {}
     target:
       area_id:
       - entertainment_center
@@ -22,15 +21,18 @@
       - living_room
       - office
       entity_id:
-      - media_player.jason_s_group_2
-  - service: remote.turn_off
-    data: {}
+      - media_player.bedroom_speaker
+      - media_player.kitchen_speakers
+      - media_player.living_room_speaker
+    action: homeassistant.turn_off
+  - data: {}
     target:
       entity_id:
       - remote.entertainment_center_tv
       - remote.bedroom_tv
       - remote.kitchen_tv
     enabled: true
+    action: remote.turn_off
   mode: single
 - id: '1591915766628'
   alias: Off at 10 PM
@@ -119,7 +121,7 @@
   description: Arrive home
   trigger:
   - platform: zone
-    entity_id: device_tracker.pixel_8_pro_2
+    entity_id: person.jason
     zone: zone.home
     event: enter
   condition: []
@@ -141,6 +143,13 @@
       entity_id:
       - scene.living_room_bright
       - switch.switch_group_4
+  - service: tts.speak
+    target:
+      entity_id: tts.google_en_com
+    data:
+      cache: true
+      media_player_entity_id: media_player.bedroom_speaker
+      message: Welcome home, Jason
   mode: single
 - id: '1606329407790'
   alias: Away Nighttime
@@ -171,18 +180,6 @@
     data: {}
     target:
       entity_id: remote.entertainment_center_tv
-  mode: single
-- id: '1607373949770'
-  alias: Add Torrent
-  description: Add torrent from text file
-  trigger:
-  - platform: state
-    entity_id: input_text.torrent_url
-  condition: []
-  action:
-  - service: transmission.add_torrent
-    data:
-      value: '{{ states(''input_text.torrent_url'') }}'
   mode: single
 - id: '1614012243814'
   alias: Restore Samba Backup sensor on startup
@@ -227,19 +224,4 @@
     - sun
   action:
   - service: script.full_snapshot
-  mode: single
-- id: '1616595193455'
-  alias: Piserver offline
-  description: ''
-  trigger:
-  - platform: state
-    entity_id: sensor.plex_status
-    attribute: friendly_name
-    from: Online
-    to: Offline
-  condition: []
-  action:
-  - service: notify.notify
-    data:
-      message: Piserver is {{states('sensor.plex_status')}}
   mode: single
