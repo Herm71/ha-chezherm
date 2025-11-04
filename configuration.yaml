@@ -5,60 +5,11 @@ default_config:
 frontend:
   themes: !include_dir_merge_named themes
 
-# Text-to-speech
-tts:
-  - platform: google_translate
-
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 sensor: !include sensors.yaml
-
-# Google Assistant
-google_assistant:
-  project_id: home-assistant-89980
-  service_account: !include SERVICE_ACCOUNT.JSON
-  report_state: true
-  expose_by_default: false
-  entity_config:
-    switch.switch_group_4:
-      expose: true
-      name: Bedroom Nightstand Lamps
-      aliases:
-        - Nightstand Lamps
-        - Nightstand Lights
-      room: Bedroom
-    light.light_group:
-      expose: true
-      name: Bedroom Overhead Lights
-      aliases:
-        - Bedroom Overhead
-      room: Bedroom
-    light.living_room_overhead_lights:
-      expose: true
-      name: Living Room Overhead Lights
-      aliases:
-        - Living Room Overhead
-      room: Living Room
-    light.kitchen_overhead_lights:
-      expose: true
-      name: Kitchen Overhead Lights
-      aliases:
-        - Kitchen Overhead
-      room: Kitchen
-
-homeassistant:
-  name: Chez Herm
-  latitude: 36.972044
-  longitude: -122.028718
-  elevation: 36
-  time_zone: America/Los_Angeles
-  external_url: "https://chezherm.duckdns.org"
-  internal_url: "https://homeassistant.local:8123"
-  currency: USD
-  customize: !include customize.yaml
-  allowlist_external_dirs:
-    - /config
+mqtt: !include mqtt.yaml
 
 # Enable Wake ON Lan
 wake_on_lan:
@@ -78,14 +29,12 @@ logger:
     AIOGitHubAPI: debug
     androidtv.adb_command: info
 
-#DuckDNS
-#duckdns:
-#  domain: chezherm
-#  access_token: 8d5483ec-5e3d-4271-84c5-4ff5ffc563e6
-## Configure http for ssl certificate
-#http:
-#  ssl_certificate: /ssl/fullchain.pem
-#  ssl_key: /ssl/privkey.pem
+http:
+  server_host: 0.0.0.0
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 192.168.10.152  # Or replace with the specific IP of your NPM VM if you prefer
+
 
 command_line:
   - sensor:
@@ -94,66 +43,18 @@ command_line:
       unit_of_measurement: "°C"
       value_template: "{{ value | multiply(0.001) | round(2) }}"
 
-# LastFM Scrobbler
-lastfm_scrobbler:
-  unique_id: lastfm.scrobbler
-  API_KEY: !secret API_KEY
-  API_SECRET: !secret API_SECRET
-  SESSION_KEY: !secret SESSION_KEY
-  media_players:
-    - media_player.jason_s_group_2
-    - media_player.living_room_speaker
-    - media_player.kitchen_speakers
-    - media_player.plex_plexamp_android
-  scrobble_percentage: 25 # The default value is 1 if this line is omitted.
-
-# Groups
-switch:
-  - platform: group
-    name: "Speaker Lights"
-    unique_id: switch.speaker_lights
-    entities:
-      - switch.lava_lamp
-      - switch.salt_lamp
-  - platform: group
-    name: "Bedroom Nightstand Lamps"
-    unique_id: switch.bedroom_nightstand
-    entities:
-      - switch.italian_vase_lamp_2
-      - switch.bong_lamp_2
-light:
-  - platform: group
-    name: "Bedroom Overhead Lights"
-    unique_id: light.bedroom_overhead
-    entities:
-      - light.bed_1
-      - light.bed_2
-  - platform: group
-    name: "Hue Lights"
-    unique_id: light.entertainment_hue
-    entities:
-      - light.flood_1
-      - light.flood_2
-      - light.flood_3
-      - light.flood_4
-      - light.flood_5
-      - light.flood_6
-      - light.lightstrip
-  - platform: group
-    name: "Living Room Overhead Lights"
-    unique_id: light.living_overhead
-    entities:
-      - light.living_1
-      - light.living_2
-  - platform: group
-    name: "Kitchen Overhead Lights"
-    unique_id: light.kitchen_overhead
-    entities:
-      - light.kitchen_1
-      - light.kitchen_2
-  - platform: group
-    name: "Red Cabinet Lights"
-    unique_id: light.knick_knacks
-    entities:
-      - light.rock_and_rye_light
-      - light.pocket_watch_light
+# Proxmox
+proxmoxve:
+  - host: 192.168.10.197
+    port: 8006
+    username: hass@pve
+    password: RAYgzbmKu!5syzQs
+    verify_ssl: false
+    realm: pve
+    nodes:
+      - node: pve
+        vms:
+          - 100
+          - 101
+        containers:
+          - 102

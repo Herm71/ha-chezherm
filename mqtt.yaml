@@ -1,0 +1,77 @@
+#Living Room Climate
+- switch:
+    name: "Living Room Climate OTA Switch"
+    unique_id: livingroom_climate_ota_switch
+    command_topic: "livingroom-climate/ota_mode"
+    state_topic: "livingroom-climate/state"
+    payload_on: "ON"
+    payload_off: "OFF"
+    state_on: "ON"
+    state_off: "OFF"
+    optimistic: true
+    value_template: "{{ value_json.state }}"
+    retain: true
+- switch:
+    name: "Living Room Climate Sleep Switch"
+    unique_id: livingroom_climate_sleep_switch
+    command_topic: "livingroom-climate/sleep_mode"
+    state_topic: "livingroom-climate/state"
+    payload_on: "ON"
+    payload_off: "OFF"
+    state_on: "ON"
+    state_off: "OFF"
+    optimistic: true
+    value_template: "{{ value_json.state }}"
+    retain: true
+
+# Kitchen Climate
+- switch:
+    name: "Kitchen Climate OTA Switch"
+    unique_id: kitchen_climate_ota_switch
+    command_topic: "kitchen-climate/ota_mode"
+    state_topic: "kitchen-climate/state"
+    payload_on: "ON"
+    payload_off: "OFF"
+    state_on: "ON"
+    state_off: "OFF"
+    optimistic: true
+    value_template: "{{ value_json.state }}"
+    retain: true
+- switch:
+    name: "Kitchen Climate Sleep Switch"
+    unique_id: kitchen_climate_sleep_switch
+    command_topic: "kitchen-climate/sleep_mode"
+    state_topic: "kitchen-climate/state"
+    payload_on: "ON"
+    payload_off: "OFF"
+    state_on: "ON"
+    state_off: "OFF"
+    optimistic: true
+    value_template: "{{ value_json.state }}"
+    retain: true
+
+# Back Patio Climate
+- switch:
+    name: "Back Patio Climate OTA Switch"
+    unique_id: back_patio_climate_ota_switch
+    command_topic: "back-patio-climate/ota_mode"
+    state_topic: "back-patio-climate/state"
+    payload_on: "ON"
+    payload_off: "OFF"
+    state_on: "ON"
+    state_off: "OFF"
+    optimistic: true
+    value_template: "{{ value_json.state }}"
+    retain: true
+- switch:
+    name: "Back Patio Climate Sleep Switch"
+    unique_id: back_patio_climate_sleep_switch
+    command_topic: "back-patio-climate/sleep_mode"
+    state_topic: "back-patio-climate/state"
+    payload_on: "ON"
+    payload_off: "OFF"
+    state_on: "ON"
+    state_off: "OFF"
+    optimistic: true
+    value_template: "{{ value_json.state }}"
+    retain: true

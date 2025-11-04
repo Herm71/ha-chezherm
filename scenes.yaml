@@ -1,147 +1,34 @@
-- id: '1591806183827'
-  name: Kitchen Prep
+- id: '1748915928288'
+  name: Nick Nack Random
   entities:
-    light.kitchen_1:
-      supported_color_modes:
-      - brightness
-      mode: normal
-      dynamics: none
-      friendly_name: Kitchen 1
-      supported_features: 40
-      color_mode: brightness
-      brightness: 255
-      state: 'on'
-    light.kitchen_2:
-      supported_color_modes:
-      - brightness
-      mode: normal
-      dynamics: none
-      friendly_name: Kitchen 2
-      supported_features: 40
-      color_mode: brightness
-      brightness: 255
-      state: 'on'
-    light.kitchen_light_strip:
-      min_color_temp_kelvin: 2500
-      max_color_temp_kelvin: 6500
-      min_mireds: 153
-      max_mireds: 400
-      effect_list:
-      - BubblingCauldron
-      - Aurora
-      - CandyCane
-      - Christmas
-      - Flicker
-      - ChristmasLight
-      - Hanukkah
-      - HauntedMansion
-      - Icicle
-      - Lightning
-      - Ocean
-      - Rainbow
-      - Raindrop
-      - Spring
-      - Sunrise
-      - Sunset
-      - Valentines
-      supported_color_modes:
-      - brightness
-      - color_temp
-      - hs
-      - onoff
-      color_mode: color_temp
-      brightness: 255
-      hs_color:
-      - 54.768
-      - 1.6
-      rgb_color:
-      - 255
-      - 254
-      - 250
-      xy_color:
-      - 0.326
-      - 0.333
-      friendly_name: Kitchen Light Strip
-      supported_features: 4
-      color_temp_kelvin: 6535
-      color_temp: 153
-      state: 'on'
-  metadata: {}
-  icon: mdi:palette
-- id: '1592782836171'
-  name: Bong Lamp LED Random
-  entities:
-    light.bong_lamp_led:
-      brightness: 255
-      effect: Random
+    light.nicknacks:
       effect_list:
       - None
       - Random
       - Strobe
-      friendly_name: Bong Lamp LED
-      hs_color:
-      - 264.652
-      - 98.521
-      rgb_color:
-      - 106
-      - 3
-      - 255
-      state: 'on'
-      supported_features: 61
-      xy_color:
-      - 0.193
-      - 0.067
-- id: '1592782888860'
-  name: Nick-nack random
-  entities:
-    light.pocket_watch_light:
-      brightness: 255
+      supported_color_modes:
+      - rgb
       effect: Random
-      effect_list:
-      - None
-      - Random
-      - Strobe
-      friendly_name: Pocket watch light
-      hs_color:
-      - 144.941
-      - 60.194
-      rgb_color:
-      - 101
-      - 255
-      - 165
-      state: 'on'
-      supported_features: 61
-      xy_color:
-      - 0.206
-      - 0.493
-    light.rock_and_rye_light:
+      color_mode: rgb
       brightness: 255
-      effect: Random
-      effect_list:
-      - None
-      - Random
-      - Strobe
-      friendly_name: Rock and Rye Light
       hs_color:
-      - 223.436
-      - 94.556
+      - 307.619
+      - 49.412
       rgb_color:
-      - 13
-      - 80
       - 255
-      state: 'on'
-      supported_features: 61
+      - 129
+      - 239
       xy_color:
-      - 0.139
-      - 0.081
-- id: '1642956310005'
-  name: Living Room Overhead Bright
-  entities:
-    group.livingroom_overhead:
+      - 0.385
+      - 0.217
       entity_id:
-      - light.living_1
-      - light.living_2
-      order: 4
-      friendly_name: Living Room Overhead Lights
+      - light.rock_and_rye_pocket_watch_light
+      - light.rock_and_rye_rock_and_rye_light
+      icon: mdi:lightbulb-group
+      friendly_name: NickNacks
+      supported_features: 44
       state: 'on'
-  icon: hue:bulb-group-classic-hung
+  icon: mdi:lightbulb-group-outline
+  metadata:
+    light.nicknacks:
+      entity_only: true

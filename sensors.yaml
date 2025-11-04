@@ -3,16 +3,6 @@
   time_zone: lst_ldt
   unit_system: english
   name: "Monterey Bay Tides"
-- platform: google_wifi
-  host: 192.168.86.1
-  name: Google google_wifi
-  monitored_conditions:
-    - current_version
-    - new_version
-    - uptime
-    - last_restart
-    - local_ip
-    - status
 - platform: template
   sensors:
     nextsunrise:
@@ -101,68 +91,30 @@
       unique_id: lastfm.toptrack
 - platform: template
   sensors:
-    plexmusic_track:
-      friendly_name: "Track"
-      value_template: >-
-        {% if states.media_player.plex_plex_cast_chromecast %}
-        {{state_attr('media_player.plex_plex_cast_chromecast','media_title')}}
-        {%endif%}
-      unique_id: plexmusic.track
-    plexmusic_artist:
-      friendly_name: "Artist"
-      value_template: >-
-        {% if states.media_player.plex_plex_cast_chromecast %}
-        {{state_attr('media_player.plex_plex_cast_chromecast','media_artist')}}
-        {%endif%}
-      unique_id: plexmusic.artist
-    plexmusic_album:
-      friendly_name: "Album"
-      value_template: >-
-        {% if states.media_player.plex_plex_cast_chromecast %}
-        {{state_attr('media_player.plex_plex_cast_chromecast','media_album_name')}}
-        {%endif%}
-      unique_id: plexmusic.album
-    plexmusic_albumart:
-      friendly_name: "Album Art"
-      value_template: >-
-        {% if states.media_player.plex_plex_cast_chromecast %}
-        {{state_attr('media_player.plex_plex_cast_chromecast','entity_picture')}}
-        {%endif%}
-      unique_id: plexmusic.albumart
-- platform: template
-  sensors:
     # Music
     album_count:
       friendly_name: "Album Count"
-      entity_id: sensor.hermserver_library_music
       value_template: "{{ state_attr('sensor.hermserver_library_music', 'albums') }}"
     artist_count:
       friendly_name: "Artist Count"
-      entity_id: sensor.hermserver_library_music
       value_template: "{{ state_attr('sensor.hermserver_library_music', 'artists') }}"
     last_added_music:
       friendly_name: "Last Music Added"
-      entity_id: sensor.hermserver_library_music
       value_template: "{{ state_attr('sensor.hermserver_library_music', 'last_added_item') }}"
     last_timestamp_music:
       friendly_name: "Last Music Added Time"
-      entity_id: sensor.hermserver_library_music
       value_template: "{{ state_attr('sensor.hermserver_library_music', 'last_added_timestamp') }}"
     # Movies
     last_added_movies:
       friendly_name: "Last Movie Added"
-      entity_id: sensor.hermserver_library_movies
       value_template: "{{ state_attr('sensor.hermserver_library_movies', 'last_added_item') }}"
     last_timestamp_movies:
       friendly_name: "Last Movie Added Time"
-      entity_id: sensor.hermserver_library_movies
       value_template: "{{ state_attr('sensor.hermserver_library_movies', 'last_added_timestamp') }}"
     # TV Shows
     last_added_tv_shows:
       friendly_name: "Last TV Show Added"
-      entity_id: sensor.hermserver_library_tv_shows
       value_template: "{{ state_attr('sensor.hermserver_library_tv_shows', 'last_added_item') }}"
     last_timestamp_tv_shows:
       friendly_name: "Last TV Show Added Time"
-      entity_id: sensor.hermserver_library_tv_shows
       value_template: "{{ state_attr('sensor.hermserver_library_tv_shows', 'last_added_timestamp') }}"

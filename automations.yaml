@@ -1,16 +1,17 @@
 - id: '1591814013567'
   alias: Away Daytime
   description: Automation for when I leave home in the daytime
-  trigger:
+  triggers:
   - entity_id: person.jason
     event: leave
-    platform: zone
     zone: zone.home
-  condition:
-  - condition: sun
-    before: sunset
-    after: sunrise
-  action:
+    trigger: zone
+  - trigger: tag
+    tag_id: aba8a718-5fb1-4042-bcaf-0056a7149d52
+  - trigger: tag
+    tag_id: 435a2b15-6458-43f5-9d45-d9912287b8c3
+  conditions: []
+  actions:
   - data: {}
     target:
       area_id:
@@ -22,8 +23,8 @@
       - office
       entity_id:
       - media_player.bedroom_speaker
-      - media_player.kitchen_speakers
       - media_player.living_room_speaker
+      - media_player.kitchen_pair
     action: homeassistant.turn_off
   - data: {}
     target:
@@ -35,151 +36,124 @@
     action: remote.turn_off
   mode: single
 - id: '1591915766628'
-  alias: Off at 10 PM
+  alias: Off at night
   description: Turn lights off at 10 PM
-  trigger:
+  triggers:
   - at: '22:00:00'
-    platform: time
-  condition: []
-  action:
-  - service: homeassistant.turn_off
-    data: {}
+    trigger: time
+  conditions: []
+  actions:
+  - data: {}
     target:
       entity_id:
       - light.kitchen_light_strip
-      - switch.switch_group_3
-      - light.red_cabinet_lights
-  mode: single
-- id: '1591917817012'
-  alias: Morning 5AM
-  description: Turn on lights at 5AM
-  trigger:
-  - at: 05:00:00
-    platform: time
-  condition:
-  - condition: zone
-    entity_id: device_tracker.pixel_6_pro_2
-    zone: zone.home
-  action:
-  - scene: scene.nick_nack_random
-  - service: scene.turn_on
-    target:
-      entity_id: scene.office_bright
-    metadata: {}
-  - service: homeassistant.turn_on
-    data: {}
-    target:
-      entity_id:
-      - group.entertainment_center_2
-      - group.bedroom_nightstand
+      - light.nicknacks
+    action: homeassistant.turn_off
   mode: single
 - id: '1592782675006'
   alias: Morning 7AM
   description: Stuff to do at 7AM
-  trigger:
+  triggers:
   - at: 06:55:00
-    platform: time
-  condition:
+    trigger: time
+  conditions:
   - condition: zone
     entity_id: device_tracker.pixel_8_pro_2
     zone: zone.home
-  action:
-  - service: homeassistant.turn_off
+  actions:
+  - data: {}
+    action: homeassistant.turn_off
     target:
-      entity_id:
-      - group.bedroom_overhead
-      - group.kitchen_overhead
-    data: {}
-  - service: light.turn_on
-    data:
+      area_id: bedroom
+  - data:
       transition: 300
       brightness_pct: 100
     target:
       entity_id:
       - light.floor_lamp
-      - light.living_room_overhead_lights
+      - light.nicknacks
+      device_id: df687f50f36cfa311f712735a3144108
+    action: light.turn_on
   mode: single
 - id: '1593448013742'
   alias: Sunset
   description: Lights to turn on at sunset
-  trigger:
+  triggers:
   - event: sunset
-    platform: sun
-  condition:
+    trigger: sun
+  conditions:
   - condition: zone
     entity_id: person.jason
     zone: zone.home
-  action:
-  - scene: scene.nick_nack_random
-  - service: hue.activate_scene
-    data: {}
+  actions:
+  - data: {}
     target:
       entity_id: scene.entertainment_center_chill
+    action: hue.activate_scene
   mode: single
 - id: '1605646082723'
   alias: Arrive Home
   description: Arrive home
-  trigger:
-  - platform: zone
-    entity_id: person.jason
+  triggers:
+  - entity_id: person.jason
     zone: zone.home
     event: enter
-  condition: []
-  action:
-  - service: scene.turn_on
-    target:
+    trigger: zone
+  - trigger: tag
+    tag_id: 1df7102b-7370-4d0c-923e-ec1cf372feda
+  - trigger: tag
+    tag_id: 0e6810a4-055c-4fc2-81a2-a110ccb60416
+  conditions: []
+  actions:
+  - target:
       entity_id: scene.office_bright
     metadata: {}
-  - scene: scene.nick_nack_random
-  - service: light.turn_on
-    data:
+    action: scene.turn_on
+    data: {}
+  - action: scene.turn_on
+    target:
+      entity_id: scene.nick_nack_random
+    data: {}
+  - data:
       color_name: white
       brightness_pct: 50
     target:
       entity_id: light.kitchen_light_strip
-  - service: homeassistant.turn_on
-    data: {}
+    action: light.turn_on
+  - data: {}
     target:
       entity_id:
       - scene.living_room_bright
-      - switch.switch_group_4
-  - service: tts.speak
+    action: homeassistant.turn_on
+  - action: tts.speak
     target:
       entity_id: tts.google_en_com
     data:
       cache: true
-      media_player_entity_id: media_player.bedroom_speaker
-      message: Welcome home, Jason
+      media_player_entity_id: media_player.jason_s_group_2
+      message: Welcome home!
   mode: single
 - id: '1606329407790'
   alias: Away Nighttime
   description: If I am away, turn off most lights, turn on nightlights
-  trigger:
-  - platform: zone
-    entity_id: person.jason
+  triggers:
+  - entity_id: person.jason
     zone: zone.home
     event: leave
-  condition:
+    trigger: zone
+  conditions:
   - condition: sun
     before: sunrise
     after: sunset
-  action:
-  - service: homeassistant.turn_off
-    data: {}
+  actions:
+  - action: scene.turn_on
     target:
-      area_id:
-      - bedroom
-      - closet
-      - entertainment_center
-      - kitchen
-      - living_room
-      - office
-  - scene: scene.entertainment_center_nightlight
-  - scene: scene.nick_nack_random
-  - service: remote.turn_off
+      entity_id: scene.entertainment_center_nightlight
     data: {}
+  - action: scene.turn_on
     target:
-      entity_id: remote.entertainment_center_tv
+      entity_id: scene.nick_nack_random
+    data: {}
   mode: single
 - id: '1614012243814'
   alias: Restore Samba Backup sensor on startup
@@ -194,24 +168,6 @@
       addon: 15d21743_samba_backup
       input: restore-sensor
   mode: single
-- id: '1615145533484'
-  alias: Partial Snapshot
-  description: Automation to run the partial snapshot script
-  trigger:
-  - platform: time
-    at: 03:30:00
-  condition:
-  - condition: time
-    weekday:
-    - mon
-    - tue
-    - wed
-    - thu
-    - fri
-    - sat
-  action:
-  - service: script.part_snapshot
-  mode: single
 - id: '1615150083415'
   alias: Full Snapshot
   description: Automation to run the full snapshot script
@@ -224,4 +180,200 @@
     - sun
   action:
   - service: script.full_snapshot
+  mode: single
+- id: '1748480687921'
+  alias: Zoom Tag automation
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: 24117341-707a-4742-8ba1-a39376d2585e
+  conditions: []
+  actions:
+  - action: script.zoom_meeting
+    metadata: {}
+    data: {}
+  mode: single
+- id: '1748484718337'
+  alias: Watch Media
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: 25ab3a36-3030-4714-b4b3-d2cc3ef6bbd9
+  conditions: []
+  actions:
+  - action: script.watch_media
+    metadata: {}
+    data: {}
+  mode: single
+- id: '1748497163069'
+  alias: Vase Lamp
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: df701144-949e-42bb-a7a0-a4d457b24c17
+  conditions: []
+  actions:
+  - action: switch.toggle
+    metadata: {}
+    data: {}
+    target:
+      device_id: 9266c74b211c63db135476c0a02fc2d4
+  mode: single
+- id: '1748634750104'
+  alias: Floor lamp
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: 1f5873ac-20c9-4ff4-950a-ade425be5c61
+  conditions: []
+  actions:
+  - action: light.toggle
+    metadata: {}
+    data: {}
+    target:
+      device_id: f370d33124e5beda2e08e39370e8260c
+  mode: single
+- id: '1748661988238'
+  alias: 'Closet light '
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: e239b16a-0c29-4570-986a-b19cdb22dedc
+  conditions: []
+  actions:
+  - action: light.toggle
+    metadata: {}
+    data: {}
+    target:
+      area_id: closet
+      device_id: 5fbdaeed278655903b7d623edcebb002
+  mode: single
+- id: '1748706326974'
+  alias: 'Bedroom lights '
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: 7d2d95de-ea03-4c21-9df8-2a4ae17109e8
+  conditions: []
+  actions:
+  - action: light.toggle
+    metadata: {}
+    data: {}
+    target:
+      entity_id: light.bedroom
+  mode: single
+- id: '1748799185721'
+  alias: 'Bong Lamp '
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: 2e2dfd8e-0b83-4a5e-88af-db07c3d462e9
+  conditions: []
+  actions:
+  - action: switch.toggle
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.bong_lamp_2
+  mode: single
+- id: '1748882623228'
+  alias: Living room ON
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: 69cd0af8-5f9d-4160-9d03-627fb2ffe07c
+  conditions: []
+  actions:
+  - action: light.turn_on
+    metadata: {}
+    data: {}
+    target:
+      device_id: df687f50f36cfa311f712735a3144108
+  - action: light.turn_on
+    metadata: {}
+    data: {}
+    target:
+      device_id: f370d33124e5beda2e08e39370e8260c
+  mode: single
+- id: '1749230146567'
+  alias: Bathroom motion
+  description: ''
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.bathroom_wemos_d1_mini_bathroom_motion_sensor
+      light_target:
+        area_id: bathroom
+      no_motion_wait: 60
+- id: '1749249012207'
+  alias: 'Bathroom Lights tag '
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: 5fb03d2d-cc97-40ce-a348-ef5d5fc3e4b8
+  conditions: []
+  actions:
+  - action: light.toggle
+    metadata: {}
+    data: {}
+    target:
+      entity_id: light.bathroom_lights
+  mode: single
+- id: '1749422922670'
+  alias: Kitchen motion sensor
+  description: ''
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.kitchen_wemos_d1_mini_kitchen_motion_sensor
+      light_target:
+        entity_id: light.kitchen_overhead_lights_2
+      no_motion_wait: 30
+- id: '1750018408050'
+  alias: Kitchen Light strip tag
+  description: ''
+  triggers:
+  - trigger: tag
+    tag_id: c380d514-f1e0-416f-91b1-03535a0e2e00
+  conditions: []
+  actions:
+  - action: light.toggle
+    metadata: {}
+    data: {}
+    target:
+      entity_id: light.kitchen_light_strip
+  mode: single
+- id: '1752006074174'
+  alias: Plex update notification
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - update.hermserver_update
+    from: 'off'
+    to: 'on'
+  conditions: []
+  actions:
+  - action: notify.persistent_notification
+    metadata: {}
+    data:
+      message: Plex Server update available
+      title: Update Plex
+  mode: single
+- id: '1752006374693'
+  alias: Synology update notification
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - update.hermserver_dsm_update
+    from: 'off'
+    to: 'on'
+  conditions: []
+  actions:
+  - action: notify.persistent_notification
+    metadata: {}
+    data:
+      message: Synology DSM update available
+      title: Update Synology
   mode: single
